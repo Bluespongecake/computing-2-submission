@@ -164,8 +164,8 @@ tacToe.everyEdgeIndexToCheck = function(dims) {
  * startindex is the N-dimensional corner to check from
  * frozenList is instructions to freeze a given dimension
  * e.g [1, 0, 0 ,0] freezes the 4th dimension (index index 0)
- * @param {number[]} startIndex 
- * @param {number[]} frozenList 
+ * @param {number[]} startIndex
+ * @param {number[]} frozenList
  * @returns {number[]} an incrementation array to step across when searching 
  * for lines in an N-dimensional cube
  */

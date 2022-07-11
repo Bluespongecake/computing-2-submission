@@ -1,5 +1,5 @@
 # Computing 2 Coursework Submission.
-**CID**: [YOUR CID]
+**CID**: 02049986
 
 This is the submission template for your Computing 2 Applications coursework submission.
 
@@ -45,7 +45,9 @@ I'll run the same commands when I download your repos.
   - [ ] `index.html`
   - [ ] `default.css`
   - [ ] `main.js`
-  - [ ] Any other files you need to include.
+  - [ ] `nDimensionalLineFinder.js`
+  - [ ] `tacToe.js`
+  - [ ] `stats4D.js`
 
 ### Finally
 - [ ] Push to GitHub.

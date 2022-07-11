@@ -12,7 +12,7 @@
 
     --banner-background: rgb(225, 225, 225);
     --banner-colour: rgb(0, 0, 0);
-    --border-colour: rgb(225, 225, 225);
+    --border-colour: rgb(255, 0, 0);
     --result-background: #224466de;
     --sidebar-background: rgb(255, 255, 255);
     --sidebar-colour: rgb(84, 84, 84);
@@ -45,7 +45,8 @@ body
 
 #game_board
 {
-    aspect-ratio: 7 / 6;
+    aspect-ratio: 1;
+    border: 3px solid var(--border-colour);
     line-height: 0;
     margin-left: auto;
     margin-right: auto;
@@ -141,6 +142,10 @@ aside
     width: var(--sidebar-width);
 }
 
+.sidebar
+{
+    padding-top: 20px;
+}
 .sidebar h2
 {
     margin-bottom: 0;
@@ -165,6 +170,7 @@ aside
 
 .sidebar .game_info img
 {
+    border: 3px solid var(--border-colour);
     max-width: 100px;
 }
 

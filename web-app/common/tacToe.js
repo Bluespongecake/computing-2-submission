@@ -1,5 +1,5 @@
-import R from "../common/ramda.js";
-import lineFinder from "../common/nDimensionalLineFinder.js";
+import R from "./ramda.js";
+import lineFinder from "./lineFinder.js";
 
 const DIMENSIONS = 4;
 const BOARDWIDTH = 3;
@@ -166,7 +166,7 @@ tacToe.everyEdgeIndexToCheck = function(dims) {
  * e.g [1, 0, 0 ,0] freezes the 4th dimension (index index 0)
  * @param {number[]} startIndex
  * @param {number[]} frozenList
- * @returns {number[]} an incrementation array to step across when searching 
+ * @returns {number[]} an incrementation array to step across when searching
  * for lines in an N-dimensional cube
  */
 tacToe.diagonalIncrementation = function(startIndex, frozenList) {
@@ -189,7 +189,7 @@ tacToe.diagonalIncrementation = function(startIndex, frozenList) {
  * Given an index, returns whether the index is within the board
  * @param {number[]} index Index to check
  * @param {number} dimensions Number of dimensions in the board
- * @returns {boolean} Either true, if the index is in the board, or false if 
+ * @returns {boolean} Either true, if the index is in the board, or false if
  * outside the board
  */
 tacToe.isInBoard = function(index, dimensions) {

@@ -6,7 +6,7 @@
         "include": [
             "web-app/common/tacToe.js",
             "web-app/server/Stats4.js",
-            "web-app/common/nDimensionalLineFinder.js"
+            "web-app/common/lineFinder.js"
         ],
         "includePattern": "\\.js$",
         "excludePattern": "(node_modules/|docs)"

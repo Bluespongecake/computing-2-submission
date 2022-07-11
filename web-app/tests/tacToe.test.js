@@ -1,6 +1,6 @@
 import tacToe from "../common/tacToe.js";
 import R from "../common/ramda.js";
-import lineFinder from "../common/nDimensionalLineFinder.js";
+import lineFinder from "../common/lineFinder.js";
 
 const arrayEquals = function(a, b) {
     return Array.isArray(a) &&
@@ -19,8 +19,8 @@ describe("waysToWin", function () {
         const expected = 8;
         if (result !== expected) {
             throw new Error(
-                `For inputs of dimensions: ${dims}, side length: ${sidelen}, ${result} 
-                was returned,` + `when ${expected} was expected`
+                `For inputs of dimensions: ${dims}, side length: ${sidelen},
+                ${result} was returned,` + `when ${expected} was expected`
             );
         }
     });
@@ -32,12 +32,12 @@ describe("waysToWin", function () {
         const expected = 49;
         if (result !== expected) {
             throw new Error(
-                `For inputs of dimensions: ${dims}, side length: ${sidelen}, ${result} 
-                was returned,` + `when ${expected} was expected`
+                `For inputs of dimensions: ${dims}, side length: ${sidelen},
+                ${result} was returned,` + `when ${expected} was expected`
             );
         }
     });
-    it("Check that for 4 dimensions and side length 3 there are 272 ways to win",
+    it("Check that for 4 dimensions and side len 3 there are 272 ways to win",
     function () {
         const dims = 4;
         const sidelen = 3;
@@ -45,8 +45,8 @@ describe("waysToWin", function () {
         const expected = 272;
         if (result !== expected) {
             throw new Error(
-                `For inputs of dimensions: ${dims}, side length: ${sidelen}, ${result} 
-                was returned,` + `when ${expected} was expected`
+                `For inputs of dimensions: ${dims}, side length: ${sidelen},
+                ${result} was returned,` + `when ${expected} was expected`
             );
         }
     });
@@ -167,7 +167,7 @@ describe("isInBoard", function () {
             const result = isInBoard(indexesTest_B[i], dimensions);
             if (result !== expectedInd) {
                 throw new Error(
-                    `isInBoard did not work right. Returned ${result} instead 
+                    `isInBoard did not work right. Returned ${result} instead
                     of ${expectedInd}`
                 )
             }

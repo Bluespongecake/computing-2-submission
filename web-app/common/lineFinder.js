@@ -1,24 +1,39 @@
-import { binary, mapObjIndexed } from "ramda";
-import R from "../common/ramda.js";
-import tacToe from "../common/tacToe.js";
+import R from "./ramda.js";
+import tacToe from "./tacToe.js";
 
 /**
- * nDimensionalLineFinder.js is a set of helper functions that are
+ * lineFinder.js is a set of helper functions that are
  * referenced by tacToe.js
- * @namespace nDimensionalLineFinder
+ * @namespace lineFinder
  * @author Max McCormack
- * @version 2022
+ * @version 2022-v1
  */
 const lineFinder = Object.create(null);
 
 /**
- * Uses procedural code to print out a board in the terminal in an easy-to read
- * format for debugging or playing the game in the terminal.
+ * Uses procedural code to print out a 4 dimensional board in the terminal in
+ * an easy-to read format for debugging or playing the game in the terminal.
  * Thought there was no point in making this function pure.
  * @param {matrix} board The 4-dimensional board to print out
  * @returns {string} The text that represents the board we want to display.
  * Can be printed out in the terminal or read to a website for easy
  * implementatoin, etc.
+ * <p>Prints in the format:</p>
+ * <pre>
+0 0 0 | 0 0 0 | 0 0 0
+0 0 0 | 0 0 0 | 0 0 0
+0 0 0 | 0 0 0 | 0 0 0
+- - - - - - - - - - -
+0 0 0 | 0 0 0 | 0 0 0
+0 0 0 | 0 0 0 | 0 0 0
+0 0 0 | 0 0 0 | 0 0 0
+- - - - - - - - - - -
+0 0 0 | 0 0 0 | 0 0 0
+0 0 0 | 0 0 0 | 0 0 0
+0 0 0 | 0 0 0 | 0 0 0
+
+</pre>
+<p>For a blank board</p>
  */
 lineFinder.terminal4DPrint = function(board) {
     let boardTxt = "\n";

@@ -220,6 +220,12 @@ tacToe.frozenDimensionPermutations = function(dims) {
  * Should work for any side length, but I haven't tested it for that yet.
  * Not a pure function, but please excuse this as it was difficult enough to
  * implement procedurally as it were.
+ * The way it works is just an extension of the logic you would apply to 3
+ * dimensions or 2 dimensions. E.g a line in 3 dimensions would be something
+ * like [2,0,2], [1,1,1], [0,2,0]. I.e at least one of the indexes are
+ * incremented by 1 or -1. So, we just have to select a set of indices to start
+ * looking from, then loop through every possible combination of increment
+ * vectors, i,e search in every direction from the starting index.
  * @param {matrix} board The N-dimensional board to check through
  * @param {number} player The player to check for a win
  * @param {number} dimensions The number of dimensions in the board to check
@@ -275,6 +281,7 @@ tacToe.findLine = function (board, player, dimensions, BOARDWIDTH) {
 /**
  * Given a board, checks if there is a winning condition
  * Returns 0 (none) or the value of the player in quesion if a win
+ * condition is found
  * @param {matrix} board The N-dimensional board to check through
  * @param {number} player The player to check for a win
  * @param {number} dimensions The number of dimensions in the board to check

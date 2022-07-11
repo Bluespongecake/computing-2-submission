@@ -43,10 +43,17 @@ body
     width: 100%;
 }
 
+#boardArea
+{
+    border: 3px solid var(--border-colour);
+    position: relative;
+    padding: 10px;
+    border-radius: 5px;
+}
+
 #game_board
 {
     aspect-ratio: 1;
-    border: 3px solid var(--border-colour);
     line-height: 0;
     margin-left: auto;
     margin-right: auto;
@@ -118,7 +125,6 @@ main
 header
 {
     background: var(--banner-background);
-    border-bottom: var(--border-width) solid var(--border-colour);
     height: var(--banner-height);
     position: absolute;
     width: 100%;

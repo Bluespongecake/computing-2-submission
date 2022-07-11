@@ -1,5 +1,6 @@
 import tacToe from "../common/tacToe.js";
 import R from "../common/ramda.js";
+import lineFinder from "../common/nDimensionalLineFinder.js";
 
 const arrayEquals = function(a, b) {
     return Array.isArray(a) &&
@@ -115,29 +116,30 @@ describe("binaryOp", function () {
 
 const isInBoard = tacToe.isInBoard;
 describe("isInBoard", function () {
-    it("Check isInBoard works for a set of index inputs",
+
+    it("Check isInBoard works for some basic index inputs",
     function () {
-        const indexesTest = [
-            [0,0,0,0],
+        const indexesTest_A = [
+            [1,2,1,2],
             [1,2,3,4],
             [2,2,2,2],
             [1,2,3,2],
-            [1,1,1,1],
-            [9,0,0,0],
-            [-1,0,0,0]
+            [1,1,1,1]
         ];
+        const expected_A = [true, false, true, false,
+            true];
+
         const dimensions = 4;
         let results = [];
-        const expected = [true, false, true, false,
-            true, false, false];
-        for (let i = 0; i < indexesTest.length; i++) {
-            results.push(isInBoard(indexesTest[i], dimensions));
+
+        for (let i = 0; i < indexesTest_A.length; i++) {
+            results.push(isInBoard(indexesTest_A[i], dimensions));
         }
-        if (!arrayEquals(results, expected)) {
+        if (!arrayEquals(results, expected_A)) {
             let failed = [];
-            for (let i = 0; i < indexesTest.length; i++) {
-                if (results[i] != expected[i]) {
-                    failed.push(indexesTest[i])
+            for (let i = 0; i < indexesTest_A.length; i++) {
+                if (results[i] != expected_A[i]) {
+                    failed.push(indexesTest_A[i])
                 }
             }
             throw new Error(
@@ -146,8 +148,48 @@ describe("isInBoard", function () {
             );
         }
     });
+    const indexesTest_B = [
+        [0,0,0,0],
+        [9,9,9,9],
+        [2,2,2,2],
+        [2,2,3,2],
+        [1,1,1,1],
+        [9,0,0,0],
+        [-1,0,0,0]
+    ];
+    const expected_B = [true, false, true, false,
+        true, false, false];
+    for (let i = 0; i < indexesTest_B.length; i++) {
+        it("check IsInBoard works for index inputs " + indexesTest_B[i],
+        function () {
+            const dimensions = 4;
+            const expectedInd = expected_B[i];
+            const result = isInBoard(indexesTest_B[i], dimensions);
+            if (result !== expectedInd) {
+                throw new Error(
+                    `isInBoard did not work right. Returned ${result} instead 
+                    of ${expectedInd}`
+                )
+            }
+        });
+    }
 });
-
+// this is an awful way of writing out a 4D board, but for the sake of
+//readability i have compressed these two into less lines
+const blankBoard = [
+    [
+        [[0,0,0], [0,0,0], [0,0,0]],
+        [[0,0,0], [0,0,0], [0,0,0]],
+        [[0,0,0], [0,0,0], [0,0,0]]],
+    [
+        [[0,0,0], [0,0,0], [0,0,0]],
+        [[0,0,0], [0,0,0], [0,0,0]],
+        [[0,0,0], [0,0,0], [0,0,0]]],
+    [
+        [[0,0,0], [0,0,0], [0,0,0]],
+        [[0,0,0], [0,0,0], [0,0,0]],
+        [[0,0,0], [0,0,0], [0,0,0]]]
+];
 const countBoard = [
     [
         [[ 1, 2, 3], [ 4, 5, 6], [ 7, 8, 9]],
@@ -284,59 +326,6 @@ describe("everyEdgeIndexToCheck", function () {
 
 const playTurnBoardUpdate = tacToe.playTurnBoardUpdate;
 describe("playTurnBoardUpdate", function () {
-    const blankBoard = [
-        [
-            [
-                [0,0,0],
-                [0,0,0],
-                [0,0,0]
-            ],
-            [
-                [0,0,0],
-                [0,0,0],
-                [0,0,0]
-            ],
-            [
-                [0,0,0],
-                [0,0,0],
-                [0,0,0]
-            ]
-        ],
-        [
-            [
-                [0,0,0],
-                [0,0,0],
-                [0,0,0]
-            ],
-            [
-                [0,0,0],
-                [0,0,0],
-                [0,0,0]
-            ],
-            [
-                [0,0,0],
-                [0,0,0],
-                [0,0,0]
-            ]
-        ],
-        [
-            [
-                [0,0,0],
-                [0,0,0],
-                [0,0,0]
-            ],
-            [
-                [0,0,0],
-                [0,0,0],
-                [0,0,0]
-            ],
-            [
-                [0,0,0],
-                [0,0,0],
-                [0,0,0]
-            ]
-        ]
-    ];
     it("check playTurnBoardUpdate works to update"
         + " a particular index on the board",
     function () {
@@ -497,18 +486,92 @@ describe("playTurnBoardUpdate", function () {
 
 });
 
+const playersTurnFinder = tacToe.playersTurnFinder;
+describe("playersturnFinder(); - relies on playTurnBoardUpdate() being"
+    + "operational", function () {
+    it("Check to see that the correct player is returned given a board with one"
+    + " move by one player",
+    function () {
+        const player = 1;
+        const board = blankBoard;
+        const expected = 2;
+        let a = tacToe.playTurnBoardUpdate(player, board, [0,0,0,0]);
+        const result = playersTurnFinder(a);
+        if (expected !== result) {
+            throw new Error(
+                `${result} was returned when ${expected} was expected`
+            )
+        }
+    });
+    it("Check to see that the correct player is returned given a board with 16"
+    + " predetermined moves by two players",
+    function () {
+        const board = [
+            [
+                [[1,2,0], [0,0,0], [0,0,0]],
+                [[0,0,0], [0,1,0], [0,2,0]],
+                [[0,0,0], [0,0,0], [0,0,0]]],
+            [
+                [[0,0,0], [2,0,0], [0,2,0]],
+                [[0,1,0], [0,1,2], [0,0,0]],
+                [[0,0,0], [1,0,1], [2,0,0]]],
+            [
+                [[0,1,0], [0,0,0], [0,1,0]],
+                [[0,0,0], [0,2,0], [0,0,0]],
+                [[0,0,0], [0,0,0], [0,2,0]]]
+        ];
+        const expected = 1;
+        const boardTxt = (lineFinder.terminal4DPrint(board));
+        const result = playersTurnFinder(board);
+        if (expected !== result) {
+            throw new Error(
+                `${result} was returned when ${expected} was expected on board:
+                 ${boardTxt}`
+            )
+        }
+    });
+    it("Check to see that the correct player is returned given a board with 9"
+    + " moves by two players in a simulated game",
+    function () {
+        const player1 = 1;
+        const player2 = 2;
+        const board = blankBoard;
+        const expected = 1;
+        //This runs a predetermined simulated game
+        let a = tacToe.playTurnBoardUpdate(player1, board, [0,1,0,0]);
+        a = tacToe.playTurnBoardUpdate(player2, a, [0,0,1,0]);
+        a = tacToe.playTurnBoardUpdate(player1, a, [0,2,1,0]);
+        a = tacToe.playTurnBoardUpdate(player2, a, [0,2,2,1]);
+        a = tacToe.playTurnBoardUpdate(player1, a, [2,0,1,2]);
+        a = tacToe.playTurnBoardUpdate(player2, a, [1,1,1,1]);
+        a = tacToe.playTurnBoardUpdate(player1, a, [2,2,2,2]);
+        a = tacToe.playTurnBoardUpdate(player2, a, [0,0,0,0]);
+        a = tacToe.playTurnBoardUpdate(player1, a, [0,0,0,1]);
+        a = tacToe.playTurnBoardUpdate(player2, a, [2,0,1,0]);
+        const boardTxt = (lineFinder.terminal4DPrint(a));
+        const result = playersTurnFinder(a);
+        if (expected !== result) {
+            throw new Error(
+                `${result} was returned when ${expected} was expected on board:
+                 ${boardTxt}`
+            )
+        }
+    });
+});
+
+
 const checkWin = tacToe.checkWin;
-describe("checkWin - in order for these to work, playTurnBoardUpdate and" 
+describe("checkWin - in order for these to work, playTurnBoardUpdate and"
 +" newBoard must be fully operational", function () {
     it("Check to see if a 3-in a row spanning all 4 dimensions is detected" +
-    "in a 4D board ",
+    " in a 4D board ",
     function () {
         const player = 1;
         let a = tacToe.newBoard(4);
         a = tacToe.playTurnBoardUpdate(player, a, [0,0,0,0]);
         a = tacToe.playTurnBoardUpdate(player, a, [1,1,1,1]);
         a = tacToe.playTurnBoardUpdate(player, a, [2,2,2,2]);
-        const result = tacToe.checkWin(a, player, 4);
+        const result = checkWin(a, player, 4);
         const expected = player;
         if (expected !== result) {
             throw new Error(
@@ -517,7 +580,7 @@ describe("checkWin - in order for these to work, playTurnBoardUpdate and"
         }
     });
     it("Check to see if a 3-in a row spanning 3 dimensions in a 4D board"
-    + "is detected in a 4D board",
+    + " is detected in a 4D board",
     function () {
         const player = 1;
         let a = tacToe.newBoard(4);
@@ -533,7 +596,7 @@ describe("checkWin - in order for these to work, playTurnBoardUpdate and"
         }
     });
     it("Check to see if a 3-in a row spanning 2 dimensions in a 4D board"
-    + "is detected in a 4D board",
+    + " is detected in a 4D board",
     function () {
         const player = 1;
         let a = tacToe.newBoard(4);
@@ -549,7 +612,7 @@ describe("checkWin - in order for these to work, playTurnBoardUpdate and"
         }
     });
     it("Check to see if a 3-in a row spanning 1 dimension in a 4D board"
-    + "is detected",
+    + " is detected",
     function () {
         const player = 1;
         let a = tacToe.newBoard(4);
@@ -565,7 +628,8 @@ describe("checkWin - in order for these to work, playTurnBoardUpdate and"
         }
     });
     it("Check to ensure the win condition is not triggered by one any single "
-    + "board space being occupied",
+    + "board space being occupied \n (should take about 50ms because it checks"
+    + " every single possible winning condition)",
     function () {
         const board = countBoard;
         function winFuncTester(board) {

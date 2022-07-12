@@ -112,6 +112,170 @@ describe("binaryOp", function () {
         }
     });
 });
+const oneDindices = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,
+    23,24,25,26,54,55,56,57,58,59,60,61,62,63,64];
+
+const twoDindices = [
+    [0,0],
+    [1,0],
+    [2,0],
+    [3,0],
+    [4,0],
+    [5,0],
+    [6,0],
+    [7,0],
+    [8,0],
+    [0,1],
+    [1,1],
+    [2,1],
+    [3,1],
+    [4,1],
+    [5,1],
+    [6,1],
+    [7,1],
+    [8,1],
+    [0,2],
+    [1,2],
+    [2,2],
+    [3,2],
+    [4,2],
+    [5,2],
+    [6,2],
+    [7,2],
+    [8,2],
+    [0,6],
+    [1,6],
+    [2,6],
+    [3,6],
+    [4,6],
+    [5,6],
+    [6,6],
+    [7,6],
+    [8,6],
+    [0,7],
+    [1,7]
+];
+
+const fourDindices = [
+    [0,0,0,0],
+    [1,0,0,0],
+    [2,0,0,0],
+    [0,0,0,1],
+    [1,0,0,1],
+    [2,0,0,1],
+    [0,0,0,2],
+    [1,0,0,2],
+    [2,0,0,2],
+    [0,1,0,0],
+    [1,1,0,0],
+    [2,1,0,0],
+    [0,1,0,1],
+    [1,1,0,1],
+    [2,1,0,1],
+    [0,1,0,2],
+    [1,1,0,2],
+    [2,1,0,2],
+    [0,2,0,0],
+    [1,2,0,0],
+    [2,2,0,0],
+    [0,2,0,1],
+    [1,2,0,1],
+    [2,2,0,1],
+    [0,2,0,2],
+    [1,2,0,2],
+    [2,2,0,2],
+    [0,0,2,0],
+    [1,0,2,0],
+    [2,0,2,0],
+    [0,0,2,1],
+    [1,0,2,1],
+    [2,0,2,1],
+    [0,0,2,2],
+    [1,0,2,2],
+    [2,0,2,2],
+    [0,1,2,0],
+    [1,1,2,0],
+];
+
+const fourDindexTo2D = tacToe.fourDindexTo2D;
+describe("fourDindexTo2D", function () {
+    const inputs = fourDindices;
+    const expected = twoDindices;
+    const test = function(input, i){
+        it("Check if " + inputs[i] + " returns " + expected[i],
+        function () {
+            const result = fourDindexTo2D(inputs[i]);
+            if (!arrayEquals(result, expected[i])) {
+                throw new Error(
+                    `For an input of: ${inputs[i]}, ${result} was returned
+                    when ${expected[i]} was expected`
+                );
+            }
+        });
+    }
+    inputs.forEach(test);
+});
+
+
+const twoDTo1D = tacToe.twoDTo1D;
+describe("twoDTo1D", function () {
+    const inputs = twoDindices;
+    const expected = oneDindices;
+    const test = function(input, i){
+        it("Check if " + input + " returns " + expected[i],
+        function () {
+            const result = twoDTo1D(input);
+            if (result !== expected[i]) {
+                throw new Error(
+                    `For an input of: ${inputs[i]}, ${result} was returned
+                    when ${expected[i]} was expected`
+                );
+            }
+        });
+    }
+    inputs.forEach(test);
+});
+
+
+const oneDto2D = tacToe.oneDto2D;
+describe("oneDto2D", function () {
+    const inputs = oneDindices;
+    const expected = twoDindices;
+    const test = function(input, i){
+        it("Check if " + input + " returns " + expected[i],
+        function () {
+            const result = oneDto2D(input);
+
+            if (!arrayEquals(result, expected[i])) {
+                throw new Error(
+                    `For an input of: ${inputs[i]}, ${result} was returned
+                    when ${expected[i]} was expected`
+                );
+            }
+        });
+    }
+    inputs.forEach(test);
+});
+
+const twoDto4D = tacToe.twoDto4D;
+describe("oneDto2D", function () {
+    const inputs = twoDindices;
+    const expected = fourDindices;
+    const test = function(input, i){
+        it("Check if " + input + " returns " + expected[i],
+        function () {
+            const result = twoDto4D(input);
+
+            if (!arrayEquals(result, expected[i])) {
+                throw new Error(
+                    `For an input of: ${inputs[i]}, ${result} was returned
+                    when ${expected[i]} was expected`
+                );
+            }
+        });
+    }
+    inputs.forEach(test);
+});
 
 
 const isInBoard = tacToe.isInBoard;
@@ -132,9 +296,10 @@ describe("isInBoard", function () {
         const dimensions = 4;
         let results = [];
 
-        for (let i = 0; i < indexesTest_A.length; i++) {
-            results.push(isInBoard(indexesTest_A[i], dimensions));
-        }
+        indexesTest_A.forEach((index) => results.push(
+            isInBoard(index, dimensions))
+        );
+
         if (!arrayEquals(results, expected_A)) {
             let failed = [];
             for (let i = 0; i < indexesTest_A.length; i++) {

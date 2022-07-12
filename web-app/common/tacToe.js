@@ -389,6 +389,66 @@ tacToe.playersTurnFinder = function (board) {
     );
 };
 
+//
+//to 2d indices on a 9x9 board
+//
+/**
+ * A function to convert 4d indices on an N x N x N x N board
+ * @param {number[4]} fourDindex An array of length 4 that contains the
+ * 4 dimensional index to be converted - pass as [x,y,z,w]
+ * @returns {number[2]} An array of length 2 that contains the returned index
+ * - returns as [x,y]
+ */
+tacToe.fourDindexTo2D = function(fourDindex) {
+    const N = 3
+    return [
+        fourDindex[0] + N * fourDindex[3],
+        fourDindex[1] + N * fourDindex[2]
+
+    ];
+};
+
+/**
+ * Function to convert 2D coordinates on a grid N elements wide
+ * to 1D coordinates on a line.
+ * @param {number[2]} twoDindex The 2 dimensional index to be converted
+ * - pass as [x,y]
+ * @returns {number} The index of the element in the grid
+ */
+tacToe.twoDTo1D = function(twoDindex) {
+    //parameter to set how wide the 2D grid is
+    //decided to just set it here rather than have it as an input because
+    //that's all I need for now
+    const N = 9;
+    return twoDindex[0] + N * twoDindex[1];
+}
+
+/**
+ * Function to convert 1D coords on a line to a 2D grid N elements wide
+ * @param {number} oneDindex The 1 d index
+ * @returns {number[2]} The 2D coordinates
+ */
+tacToe.oneDto2D = function(oneDindex) {
+    const N = 9;
+    return [oneDindex % N, Math.trunc(oneDindex / 9)];
+}
+
+/**
+ * Maps 2D coordinates on a (N*N) x (N*N) grid to 4D coordinates
+ * on an N x N x N x N grid
+ * @param {number[2]} twoDindex The two dimensional coordinates to convert
+ * @returns {number[4]} The four dimensional output coordinates
+ */
+tacToe.twoDto4D = function(twoDindex) {
+    const N = 3;
+    return [
+        twoDindex[0] % N,
+        twoDindex[1] % N,
+        Math.floor(twoDindex[1] / N),
+        Math.floor(twoDindex[0] / N),
+    ]
+}
+
 export default Object.freeze(tacToe);
 
 //fizz lol - (this is just for debugging)

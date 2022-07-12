@@ -32,10 +32,11 @@ let boardDivs = [];
 const x_id = "x";
 const o_id = "o";
 
-const input_pane = document.getElementById("input_pane");
-const send_button = document.getElementById("send_button");
+// const input_pane = document.getElementById("input_pane");
+// const send_button = document.getElementById("send_button");
 const text_board = document.getElementById("textboard");
 let currentPlayer = 1;
+const restartButton = document.getElementById("restartButton");
 
 //create a 3x3x3x3 array of 0s
 let board = tacToe.newBoard(4);
@@ -91,43 +92,59 @@ function resetGame() {
 
 resetGame();
 
+function winFound(player) {
+    document.getElementById("winningMessage").showModal();
+}
 //function to run when a cell is clicked
 function handleCellClick(ele) {
     const cellClicked = ele.target;
     const currentClass = currentPlayer === 1 ? x_id : o_id;
     // console.log(currentClass);
-    console.log(oneDto2D(18))
     // const boardTxtNr = boardTxt.replace(/\n/g, "<br>\n");
-    const indexTxt = input_pane.value;
-    const index = indexTxt.split("").slice(0, -1).map((n) => parseInt(n));
+    // const indexTxt = input_pane.value;
+    // const index = indexTxt.split("").slice(0, -1).map((n) => parseInt(n));
+
+    //detect which div was pressed, and access its 1D coordinate
+    const cellPressed = cellClicked.accessKey;
+    //then update this to a 4D index
+    const cellPressedIdx = tacToe.twoDto4D(tacToe.oneDto2D(cellPressed));
+
     currentPlayer = tacToe.playersTurnFinder(board);
-    board = tacToe.playTurnBoardUpdate(currentPlayer, board, index);
+    board = tacToe.playTurnBoardUpdate(currentPlayer, board, cellPressedIdx);
     let boardTxt = "Player " + (tacToe.playersTurnFinder(board)) + "'s Turn";
     if (tacToe.checkWin(board, currentPlayer, 4) === currentPlayer) {
         boardTxt = "Player " + currentPlayer + " wins!!";
+        winFound(currentPlayer);
     }
+
     text_board.textContent = boardTxt;
+
+    //add an X or O to the required area in the board
     if (currentPlayer === 1) {
-        boardDivs[twoDTo1D(tacToe.fourDindexTo2D(index))].classList.add(x_id);
-        // boardDivs[twoDTo1D(fourDindexTo2D(index))].className = "cellx";
-        // boardDivs[twoDTo1D(fourDindexTo2D(index))].innerText = "x";
+        boardDivs[tacToe.twoDTo1D(tacToe.fourDindexTo2D(cellPressedIdx))]
+            .classList.add(x_id);
     }
     else if (currentPlayer === 2) {
-        boardDivs[twoDTo1D(tacToe.fourDindexTo2D(index))].classList.add(o_id);
-        // boardDivs[twoDTo1D(fourDindexTo2D(index))].className = "cello";
-        // boardDivs[twoDTo1D(fourDindexTo2D(index))].innerText = "o";
+        boardDivs[tacToe.twoDTo1D(tacToe.fourDindexTo2D(cellPressedIdx))]
+            .classList.add(o_id);
     }
+    //update current player
     currentPlayer = tacToe.playersTurnFinder(board);
+    //update the graphics for a new turn
     swapTurns(currentPlayer);
-    console.log(cellClicked.accessKey);
-    console.log(index);
-    console.log(twoDTo1D(fourDindexTo2D(index)));
+
+
+    console.log(cellPressed);
+    console.log(cellPressedIdx);
+    console.log(tacToe.twoDTo1D(tacToe.fourDindexTo2D(cellPressedIdx)));
     console.log(lineFinder.terminal4DPrint(board));
 }
 
-const boardGridElement = document.getElementById("board")
-send_button.onclick = function () {
-    console.log("AAAAA");
+restartButton.onclick = function () {
+    document.getElementById("winningMessage").close();
+    resetGame();
 };
+
+const boardGridElement = document.getElementById("board")
 
 

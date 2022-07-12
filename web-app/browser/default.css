@@ -60,23 +60,23 @@ body
     border-bottom: none;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    align-items: center;
 }
 
-#game_board
-{
-    aspect-ratio: 1;
-    line-height: 0;
-    margin-left: auto;
-    margin-right: auto;
-    max-height: 100%;
-    max-width: 100%;
-    position: relative;
-    top: 50%;
+#textboard {
+    text-align: center;
+    font-size: 10px;
 }
 
-/* start of cell and board */
+/* start of core cell and board */
 .board {
-    padding: 20px;
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    padding: 10px;
     max-height: 100%;
     max-width: 100%;
     position: relative;
@@ -100,6 +100,7 @@ body
     cursor: pointer;
 }
 
+/* grid element borders */
 .cell:nth-child(-n+9) {
     border-top: none;
 }
@@ -113,6 +114,7 @@ body
     border-bottom: none;
 }
 .cell:nth-child(9n + 3) {
+    /* margin-right: 10px; */
     border-right: 6px solid black;
 }
 .cell:nth-child(9n + 6) {
@@ -124,6 +126,8 @@ body
 .cell:nth-child(n + 46):nth-child(-n + 54) {
     border-bottom: 3px dashed black;
 }
+
+/* cell hover rules */
 .cell.x,
 .cell.o {
     cursor: not-allowed;
@@ -218,7 +222,7 @@ main
 #title
 {
     filter: drop-shadow(4px 4px 2px black);
-    color: var(--banner-colour);
+    color: rgb(180, 180, 180);
     font-family: "magnetob";
     font-style: italic;
     font-size: var(--banner-font-size);
@@ -343,41 +347,78 @@ aside
     width: 100%;
 }
 
-#result_dialog
+#winningMessage
 {
-    background: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.3);
     border: none;
     color: var(--sidebar-colour);
-    filter: drop-shadow(4px 4px 2px black);
     height: 100%;
-    position: absolute;
     text-align: center;
+    align-items: center;
+    justify-content: center;
     width: 100%;
+    justify-items: center;
+    align-items: center;
 }
 
-#result_dialog::backdrop
+#winningMessage h2
 {
-    backdrop-filter: blur(2px); /* This won't work in Firefox yet */
-}
-
-#result_dialog h2
-{
-    color: var(--banner-colour);
+    color: rgb(180, 180, 180);
+    filter: drop-shadow(4px 4px 2px black);
     font-family: "magnetob";
     font-size: 100pt;
     margin: 0;
     margin-top: calc(2 * var(--banner-height));
 }
 
-#result_message
+#result_winner
 {
     font-size: 24pt;
     font-weight: bold;
     line-height: 2;
 }
 
-#result_winner
+#result_state
 {
     font-size: 18pt;
     font-weight: bold;
+}
+
+#winningMessageContainer
+{
+    padding: 10px;
+    background-color: rgba(200,200,200,0.9);
+    width: 500px;
+    border: 2px solid var(--border-colour);
+    border-radius: 3px;
+    margin-left: 30%;
+}
+
+#restartButton {
+    margin: 10px;
+    font-size: 3rem;
+    font-family: Arial;
+    background-color: rgb(211, 211, 211);
+    border-top: 3px solid rgb(157, 157, 157);
+    border-bottom: 3px solid rgb(66, 66, 66);
+    border-left: 3px solid rgb(157, 157, 157);
+    border-right: 3px solid rgb(66, 66, 66);
+    padding: .25em .5em;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#restartButton:hover {
+    background-color: rgb(211, 211, 211);
+    color: white;
+    border-color: white;
+    border-bottom: 3px solid rgb(157, 157, 157);
+    border-top: 3px solid rgb(66, 66, 66);
+    border-right: 3px solid rgb(157, 157, 157);
+    border-left: 3px solid rgb(66, 66, 66);
 }

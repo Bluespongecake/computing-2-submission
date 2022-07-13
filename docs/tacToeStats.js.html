@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>tacToeStats.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="lineFinder.html">lineFinder</a><ul class='methods'><li data-type='method'><a href="lineFinder.html#.findLine">findLine</a></li><li data-type='method'><a href="lineFinder.html#.terminal4DPrint">terminal4DPrint</a></li></ul></li><li><a href="tacToe.html">tacToe</a><ul class='methods'><li data-type='method'><a href="tacToe.html#.binaryOp">binaryOp</a></li><li data-type='method'><a href="tacToe.html#.checkWin">checkWin</a></li><li data-type='method'><a href="tacToe.html#.coordinateIsOccupied">coordinateIsOccupied</a></li><li data-type='method'><a href="tacToe.html#.corners">corners</a></li><li data-type='method'><a href="tacToe.html#.diagonalIncrementation">diagonalIncrementation</a></li><li data-type='method'><a href="tacToe.html#.everyEdgeIndexToCheck">everyEdgeIndexToCheck</a></li><li data-type='method'><a href="tacToe.html#.factorial">factorial</a></li><li data-type='method'><a href="tacToe.html#.fourDindexTo2D">fourDindexTo2D</a></li><li data-type='method'><a href="tacToe.html#.frozenDimensionPermutations">frozenDimensionPermutations</a></li><li data-type='method'><a href="tacToe.html#.gameOverChecker">gameOverChecker</a></li><li data-type='method'><a href="tacToe.html#.isFullDraw">isFullDraw</a></li><li data-type='method'><a href="tacToe.html#.isInBoard">isInBoard</a></li><li data-type='method'><a href="tacToe.html#.newBoard">newBoard</a></li><li data-type='method'><a href="tacToe.html#.oneDto2D">oneDto2D</a></li><li data-type='method'><a href="tacToe.html#.playersTurnFinder">playersTurnFinder</a></li><li data-type='method'><a href="tacToe.html#.playTurnBoardUpdate">playTurnBoardUpdate</a></li><li data-type='method'><a href="tacToe.html#.returnBoardElement">returnBoardElement</a></li><li data-type='method'><a href="tacToe.html#.twoDTo1D">twoDTo1D</a></li><li data-type='method'><a href="tacToe.html#.twoDto4D">twoDto4D</a></li><li data-type='method'><a href="tacToe.html#.waysToWin">waysToWin</a></li></ul></li><li><a href="tacToeStats.html">tacToeStats</a><ul class='methods'><li data-type='method'><a href="tacToeStats.html#.elo">elo</a></li><li data-type='method'><a href="tacToeStats.html#.newPlayer">newPlayer</a></li><li data-type='method'><a href="tacToeStats.html#.recordGame">recordGame</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">tacToeStats.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * tacToeStats.js is a module to record simple game stats
+ * Derived from Dr Freddie Page's Stats4.js, which was included in the submission
+ * template - it does pretty much the same stuff, but just with a few adjustments.
+ * @namespace tacToeStats
+ * @author Max McCormack
+ * @version 2022
+ */
+const tacToeStats = Object.create(null);
+
+/**
+ * @memberof tacToeStats
+ * @typedef {object} Statistics
+ * @property {number} waysToWin The number of ways to win the given game
+ * @property {number} wins The number of times the player has won
+ * @property {number} draws Number of times the player has drawn
+ * @property {number} losses Number of times the player has lost
+ * @property {number} streak_curr Current winning streak
+ * @property {number} streak_max Longest winning streak
+ */
+
+const playerStats = {};
+
+/**
+ * A function to initialise an object to store data on players statistics
+ * @memberof tacToeStats
+ * @function
+ * @returns {object} An object containing details on players statistics
+ */
+const newPlayer = function () {
+    return {
+        "waysToWin": 272,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "streak_curr": 0,
+        "streak_max": 0,
+        "elo": 100
+    };
+};
+/**
+ * Written by Freddie Page - I took this from the submission template
+ * @memberof tacToeStats
+ * @function
+ * @param {number} elo_updating The previous elo score to update
+ * @param {number} elo_opponent The elo score of the opponent
+ * @param {number} result The result of the last game
+ * @returns {number} The calculated elo value for the player
+ */
+
+tacToeStats.elo = function (elo_updating, elo_opponent, result) {
+    const k_factor = 40;
+    const expected = 1 / (1 + 10 ** ((elo_opponent - elo_updating) / 400));
+    return elo_updating + k_factor * (result - expected);
+};
+
+/**
+ * Accept the results of a game as parameters and return updated stats
+ * @memberof tacToeStats
+ * @function
+ * @param {string} player_1 The name of player 1
+ * @param {string} player_2 The name of player 2
+ * @param {(0 | 1 | 2)} result The number of the player who won,
+ * or `0` for a draw.
+ * @returns {Object.&lt;tacToeStats.Statistics>} Returns statistics for player_1
+ * and player_2, i.e. the result of
+ *     {@link tacToeStats.retrieveStats}`([player_1, player_2])` */
+tacToeStats.recordGame = function (player1, player2, result) {
+    if (!playerStats[player1]) {
+        playerStats[player1] = newPlayer();
+    }
+    if (!playerStats[player2]) {
+        playerStats[player2] = newPlayer();
+    }
+    const player1Stats = playerStats[player1];
+    const player2Stats = playerStats[player2];
+    let player1Result;
+    let player2Result;
+    if (result === 0) {
+        player1Stats.draws += 1;
+        player2Stats.draws += 1;
+        player1Stats.streak_curr = 0;
+        player2Stats.streak_curr = 0;
+        player1Result = 0.5;
+        player2Result = 0.5;
+    }
+    if (result === 1) {
+        player1Stats.wins += 1;
+        player2Stats.losses += 1;
+        player1Stats.streak_curr += 1;
+        player2Stats.streak_curr = 0;
+        if (player1Stats.streak_curr > player1Stats.streak_max) {
+            player1Stats.streak_max = player1Stats.streak_curr;
+        }
+        player1Result = 1;
+        player2Result = 0;
+    }
+    if (result === 2) {
+        player2Stats.wins += 1;
+        player1Stats.losses += 1;
+        player2Stats.streak_curr += 1;
+        player1Stats.streak_curr = 0;
+        if (player2Stats.streak_curr > player2Stats.streak_max) {
+            player2Stats.streak_max = player2Stats.streak_curr;
+        }
+        player1Result = 0;
+        player2Result = 1;
+    }
+
+    const newEloP1 = tacToeStats.elo(
+        player1Stats.elo,
+        player2Stats.elo,
+        player1Result
+    );
+    const newEloP2 = tacToeStats.elo(
+        player2Stats.elo,
+        player1Stats.elo,
+        player2Result
+    );
+    player1Stats.elo = newEloP1;
+    player2Stats.elo = newEloP2;
+
+    return playerStats;
+};
+
+export default Object.freeze(tacToeStats);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.10</a> on Wed Jul 13 2022 15:53:16 GMT+0100 (Irish Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>

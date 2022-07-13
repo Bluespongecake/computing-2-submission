@@ -1,0 +1,160 @@
+*, *::after, *::before {
+    box-sizing: border-box;
+}
+
+:root
+{
+    --banner-height: 150px;
+    --banner-font-size: 75pt;
+    --border-width: 2px;
+    --result-height: 250px;
+    --result-width: 500px;
+    --slot_image_height: 120px;
+    --sidebar-width: 150px;
+    --sidebar-border-width: 5px;
+
+    --banner-background: rgb(225, 225, 225);
+    --banner-colour: rgb(0, 0, 0);
+    --border-colour: rgb(255, 0, 0);
+    --sidebar-background: rgb(255, 255, 255);
+    --sidebar-colour: rgb(84, 84, 84);
+    --tile-background: #ffffff;
+    --main-background: var(--tile-background);
+
+    font-family: "Fira Sans", sans-serif;
+}
+
+@font-face
+{
+    font-family: "magnetob";
+    src: url("../fonts/magnetob.ttf");
+    /* Licence: ./assets/OFL.txt */
+}
+
+*
+{
+    box-sizing: border-box;
+}
+
+body
+{
+    height: 100%;
+    margin: 0;
+    width: 100%;
+}
+
+#boardArea
+{
+    /* border: 3px solid var(--border-colour); */
+    position: relative;
+    padding: 10px;
+    border-radius: 5px;
+    border-bottom: none;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    align-items: center;
+    text-align: center;
+}
+
+#boardArea p{
+    font-size: 12px;
+}
+
+#seven {
+    width: 600px;
+}
+
+#eight {
+    width: 500px;
+}
+
+#one,
+#two,
+#three,
+#four,
+#five,
+#six {
+    max-width: 150px;
+}
+
+
+
+#textboard {
+    text-align: center;
+    font-size: 10px;
+}
+
+/* start of core cell and board */
+.board {
+    top: 50%;
+    transform: translate(0, -50%);
+    padding: 10px;
+    max-height: 100%;
+    max-width: 100%;
+    position: relative;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    align-items: center;
+    grid-template-columns: repeat(9, auto);
+    /* border: 3px solid var(--border-colour); */
+}
+main
+{
+    background: var(--main-background);
+    height: calc(100% - var(--banner-height));
+    left: var(--sidebar-width);
+    overflow-y: hidden;
+    position: relative;
+    top: 10px;
+    width: calc(100% - 2 * var(--sidebar-width));
+}
+
+#title
+{
+    filter: drop-shadow(4px 4px 2px black);
+    color: rgb(180, 180, 180);
+    font-family: "magnetob";
+    font-style: italic;
+    font-size: var(--banner-font-size);
+    margin: 0;
+    position: relative;
+    text-align: center;
+    top: calc(var(--banner-height) / 2 - var(--banner-font-size) / 2);
+}
+
+#title a
+{
+    color: rgb(180, 180, 180);
+}
+header
+{
+    background-image: linear-gradient(rgb(255,255,255), rgb(225, 225, 225));
+    height: var(--banner-height);
+    width: 100%;
+}
+
+#docs
+{
+    align-self: left;
+    color: var(--sidebar-colour);
+    position: absolute;
+    right: 1em;
+    font-size: 10px;
+    margin-right: 10px;
+}
+
+#details
+{
+    text-align: right;
+    color: var(--sidebar-colour);
+    position: absolute;
+    right: 1em;
+    top: 20px;
+    right: 20px;
+    font-size: 15px;
+}

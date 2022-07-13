@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en-gb">
+<meta charset="utf-8">
+<title>4D Tic Tac Toe</title>
+<link rel="stylesheet" href="./styles/default.css">
+<link rel="icon" href="./styles/tesseract_icon.png">
+
+<header>
+    <a id="details" href="./howToPlay.html">How to play</a>
+    <h1 id="title"><a href="../">4D Tic Tac Toe</a></h1>
+    <a id="docs" href="../docs">API Documentation</a>
+</header>
+
+<main tabindex="-1">
+    <div id="boardArea">
+        <h1>How to Play</h1>
+        <p>4 Dimensional tic tac toe is much like regular old 2D tic tac toe,
+            but with a few more directions to make 3 in a row. <br> <br>
+            In 1 dimensional tic tac toe, you can only make 3 in a row in one
+            direction, as shown. (In one dimension, tic tac toe isn't a particularly interesting game to play)
+        </p>
+        <img id="one" src="./assets/oneDtacToe.png" alt="oneDboard img">
+        <p>As we know, in 2 dimensional tic tac toe, you can make three in a row either across:</p>
+        <img id="two" src="./assets/twoDtacToe1.png" alt="twoDboard img">
+        <p>Or down:</p>
+        <img id="three" src="./assets/twoDtacToe2.png" alt="twoDboard img">
+        <p>Or across and down at the same time, i.e diagonally in 2 dimensions:</p>
+        <img id="four" src="./assets/twoDtacToe3.png" alt="twoDboard img">
+        <p>Playing 3D tic tac toe is the exact same as this, only there is another dimension we can get 3 in a row in
+            <br> If 1D tic tac toe is a [3] board, and 2D tic tac toe is a [3x3] board, 
+            then 3D tic tac toe should probably be a [3x3x3] board, like so:
+        </p>
+        <img id="five" src="./assets/3dstack.png" alt="twoDboard img">
+        <p>You may notice that this looks very much like a stack of 3 two dimensional boards on top of each other. 
+            <br> This makes sense, as a 2 dimensional board is a stack of three one dimensional boards!</p>
+        
+        <p><br><br> Thus, we can represent this 3D board on a two dimensional screen for ease, like so:</p>
+        <img id="six" src="./assets/threeDtactoeBlank.png" alt="twoDboard img">
+        <p>(The dotted lines represent the boundary between dimensions in the <strong>z</strong> axis, in the same way the thin 
+            lines represent the cross over between dimensions in the <strong>x</strong> and <strong>y</strong> axes)</p>
+        <p>In this 3D board, there are lots of ways to make three in a row. We can do a boring old two-dimensional
+            three-in a row, i.e three in a row across the x and y axes, and not moving along the <strong>z</strong> axis. I have already
+            shown these above on the two dimensional boards. A more interesting strategy, perhaps is to make three in a
+            row along the <strong>z</strong> axis, while not moving along the <strong>x</strong> or <strong>y</strong> axes (shown below on left), or to move along both the <strong>z</strong> 
+            and y axes at the same time (middle), or to move along all three at the same time (shown on right), which is
+            a diagonal line in 3 dimensions.
+        </p>
+        <img id="seven" src="./assets/3Dimage.png" alt="twoDboard img">
+        <p>You may notice a pattern here, which is what I am trying to get at. Once we understand the basics behind how <br>
+            one, two and three dimensional tic tac toe work, you can generalise for any number of dimensions 
+        <br><br> If a two dimensional board is three 1D "strips" of length three stacked on each other, and a 3D board is 3 of these 3x3
+            grids stacked on each other to make a cube, then a 4D board must be 3 of these 3x3x3 cubes stacked on top of each other along the 
+        4th dimension to make a 3x3x3x3 tesseract. <br><br> That sounded pretty crazy to me, but i was intrigued which is why I made this game instead of something else, like
+        a wordle clone (which is what I was planning on). It turns out that we cant actually visualise this 4-cube or "tesseract", so there is no point in trying. Much like a 2D being that 
+        can only see a slice of a cube at a time (as in squares), we can only view a 4D object in slices. Thus if we saw a 4D cube in front of us, it would look like nothing but a 
+        regular old cube. If it had a colour gradient along the 4th dimension from red to green, and it moved along the 4th dimension, we would perceive a solid red cube slowly
+        transition into a solid green cube. There is a fun game out there for iOs called "4D toys" that explains this concept really well. Definitley worth the £5.
+        </p>
+        <p>Anyways, if we extend our logic from above and represent a 4D board as three stacked 3D boards, we can represent it on a 2D screen as below:</p>
+        <img id="eight" src="./assets/4D0.png" alt="twoDboard img">
+        <p>Keep in mind this is three cubes stacked along the 4th dimension. Each 3x3 "square" you see is a 2D slice, and each vertical strip of 3 3x3 "squares" is a cube.
+            The dotted lines represent the boundary between one step along the <strong>z</strong> axis (3d dimension), and the thick solid lines represent the boundary between 
+            one step along the <strong>w</strong> axis (the 4th dimensional axis).
+        </p>
+        <p>In this new board there are loads of directions we can create a line in, for example, along the 4th dimension only (across the <strong>z</strong> axis only):</p>
+        <img id="eight" src="./assets/4D1.png" alt="twoDboard img">
+        <p><br>Across the <strong>x</strong> and <strong>w</strong> axes:</p>
+        <img id="eight" src="./assets/4D2.png" alt="twoDboard img">
+        <p><br>Across the <strong>x</strong>, <strong>z</strong> and <strong>w</strong> axes:</p>
+        <img id="eight" src="./assets/4D3.png" alt="twoDboard img">
+        <p><br>Across the all four dimensions: the <strong>x</strong>, <strong>y</strong>, <strong>z</strong>and <strong>w</strong> axes:</p>
+        <img id="eight" src="./assets/4D4.png" alt="twoDboard img">
+        <p><br><br>As you can see there are loads of new ways to make a line of three in a row in a 4D board (272 to be exact). This should lead to lots of exciting, 
+            interesting and creative new strategies that weren't available before. <br><br>
+            If you are ever having trouble visualising the lines, think in terms of indices: <br>
+            - In a 2D board, a three in a row could be [0,0] [1,1] [2,2], or [0,0] [0,1] [0,2]. <br>
+                Notice how the criteria for three in a row is that at least  <br>one index is changing by a
+                magnitude of exactly 1. <br>
+            - In a 3D board, a three in a row could be [0,0,0] [0,0,1] [0,0,2], [1,2,1] [1,1,1], [1,0,1], or maybe [0,0,2] [1,1,1] [2,2,0] <br>
+            Notice the pattern? Same as before, for three in a row, at lease one index is changing in steps of magnitude one each time. All three indices could change, but at least one. <br>
+            For four dimensions it is the exact same, but harder to visualise. Thankfully the maths is just an extension.
+
+        </p>
+            
+            <p>
+                I have only played a few games of this 4D tic tac toe so far against my friend Murat,
+            who beat me every single time despite me having made it. I haven't tested it enough, but I fear that there may be some infallible strategies available in the game that 
+            provide a way to at least guarantee a draw every time, like in regular 2D tic tac toe. <br><br> If you find that this is the case, please let me know. I could address this 
+            by instead of ending the game when one player gets three in a row, continue the game until the board is full. The number of 3s in a row for each player would be counted
+            and whoever has more would win, which I would be able to implement in about a few hours or so. However, I thought this version of the game would be easier to play, which is 
+            why I made it this way. I might just make that second version of it for the craic though.</p>
+        <p id="textboard"></p>
+        <div class="board" id="board">
+        </div>
+    </div>
+</main>

@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en-gb">
+<meta charset="utf-8">
+<title>4D Tic Tac Toe</title>
+<link rel="stylesheet" href="default.css">
+<link rel="icon" href="./assets/tesseract_icon.png">
+<script type="module" src="main.js"></script>
+
+<header>
+    <a id="details" href="docs/howToPlay.html">How to play</a>
+    <h1 id="title">4D Tic Tac Toe</h1>
+    <a id="docs" href="docs/">API Documentation</a>
+</header>
+
+<main tabindex="-1">
+    <div id="boardArea">
+        <!-- just for debugging
+        <textarea id="input_pane"></textarea>
+        <button id="send_button" type="button">SEND</button> -->
+        <p id="textboard">Click a location to start!</p>
+        <div class="board" id="board">
+        </div>
+    </div>
+</main>
+
+<aside id="home_player" class="sidebar" aria-label="Home Player Info">
+    <div class="player">
+        <input id="home_name" aria-label="Home player name" value="Player 1">
+    </div>
+    <div class="game_info">
+        <div id="home_player_type">X</div>
+        <img id="home_player_type_image" src="./assets/x_image.png" alt="x_image">
+        <div id="home_ready">You're up!</div>
+    </div>
+    <div class="stats">
+        <table>
+            <tr>
+                <th role="none"></th>
+                <th scope="col">Win</th>
+                <th scope="col">Loss</th>
+                <th scope="col">Draw</th>
+                <th scope="col">Elo</th>
+            </tr>
+            <tr>
+                <th scope="row"></th>
+                <td id="p1_wins">0</td>
+                <td id="p1_losses">0</td>
+                <td id="p1_draws">0</td>
+                <td id="p1_elo">100</td>
+            </tr>
+        </table>
+        <div>
+            <strong>Longest Streak</strong>
+            <span id="p1_longest_streak">0</span>
+        </div>
+        <div>
+            <strong>Current Streak</strong>
+            <span id="p1_current_streak">0</span>
+        </div>
+    </div>
+</aside>
+
+<aside id="away_player" class="sidebar" aria-label="Away Player Info">
+    <div class="player">
+        <input id="away_name" aria-label="Away player name" value="Player 2">
+    </div>
+    <div class="game_info">
+        <div id="away_player_type">O</div>
+        <img id="away_player_type_image" src="./assets/O_image.png" alt="o_image">
+        <div id="away_ready">Wait your turn…</div>
+    </div>
+    <div class="stats">
+        <table>
+            <tr>
+                <th role="none"></th>
+                <th scope="col">Win</th>
+                <th scope="col">Loss</th>
+                <th scope="col">Draw</th>
+                <th scope="col">Elo</th>
+            </tr>
+            <tr>
+                <th scope="row"></th>
+                <td id="p2_wins">0</td>
+                <td id="p2_losses">0</td>
+                <td id="p2_draws">0</td>
+                <td id="p2_elo">100</td>
+            </tr>
+        </table>
+        <div>
+            <strong>Longest Streak</strong>
+            <span id="p2_longest_streak">0</span>
+        </div>
+        <div>
+            <strong>Current Streak</strong>
+            <span id="p2_current_streak">0</span>
+        </div>
+    </div>
+</aside>
+
+<dialog id="winningMessage" tabindex="0" aria-label="Game over message">
+    <h2>Game Over!</h2>
+    <div id="winningMessageContainer">
+        <div id="result_winner">Player 1 wins</div>
+        <div id="result_state">3 in a row found!</div>
+        <button id="restartButton">Restart</button>
+    </div>
+</dialog>

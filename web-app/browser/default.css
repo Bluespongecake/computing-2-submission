@@ -1,0 +1,408 @@
+*, *::after, *::before {
+    box-sizing: border-box;
+}
+
+:root
+{
+    --cell-size: 70px;
+    --mark-size: calc(var(--cell-size) * .9);
+
+    --banner-height: 150px;
+    --banner-font-size: 75pt;
+    --sidebar-width: 150px;
+    --sidebar-border-width: 5px;
+
+    --banner-background: rgb(225, 225, 225);
+    --border-colour: rgb(255, 0, 0);
+    --sidebar-colour: rgb(84, 84, 84);
+    --tile-background: #ffffff;
+    --main-background: var(--tile-background);
+
+    font-family: "Fira Sans", sans-serif;
+}
+
+@font-face
+{
+    font-family: "magnetob";
+    src: url("./assets/magnetob.ttf");
+    /* Licence: ./assets/OFL.txt */
+}
+
+*
+{
+    box-sizing: border-box;
+}
+
+body
+{
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+}
+
+#boardArea
+{
+    /* border: 3px solid var(--border-colour); */
+    position: relative;
+    padding: 10px;
+    border-radius: 5px;
+    height:100%;
+    border-bottom: none;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    align-items: center;
+}
+
+#textboard {
+    text-align: center;
+    font-size: 10px;
+}
+
+.board {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    padding: 10px;
+    max-height: 100%;
+    max-width: 100%;
+    position: relative;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    align-items: center;
+    grid-template-columns: repeat(9, auto);
+    /* border: 3px solid var(--border-colour); */
+}
+  
+.cell {
+    width: var(--cell-size);
+    height: var(--cell-size);
+    border: 0.5px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+}
+
+/* grid element borders */
+.cell:nth-child(-n+9) {
+    border-top: none;
+}
+.cell:nth-child(9n + 1) {
+    border-left: none;
+}
+.cell:nth-child(9n + 9) {
+    border-right: none;
+}
+.cell:nth-child(n + 72) {
+    border-bottom: none;
+}
+.cell:nth-child(9n + 3) {
+    /* margin-right: 10px; */
+    border-right: 6px solid black;
+}
+.cell:nth-child(9n + 6) {
+    border-right: 6px solid black;
+}
+.cell:nth-child(n + 19):nth-child(-n + 27) {
+    border-bottom: 3px dashed black;
+}
+.cell:nth-child(n + 46):nth-child(-n + 54) {
+    border-bottom: 3px dashed black;
+}
+
+/* cell hover rules */
+.cell.x,
+.cell.o {
+    cursor: not-allowed;
+}
+  
+.cell.x::before,
+.cell.x::after,
+.cell.o::before {
+    background-color: black;
+}
+  
+.board.x .cell:not(.x):not(.o):hover::before,
+.board.x .cell:not(.x):not(.o):hover::after,
+.board.o .cell:not(.x):not(.o):hover::before {
+    background-color: lightgrey;
+}
+
+.cell.x::before,
+.cell.x::after,
+.board.x .cell:not(.x):not(.o):hover::before,
+.board.x .cell:not(.x):not(.o):hover::after {
+    content: '';
+    position: absolute;
+    width: calc(var(--mark-size) * .10);
+    height: var(--mark-size);
+}
+
+.cell.x::before,
+.board.x .cell:not(.x):not(.o):hover::before {
+    transform: rotate(45deg);
+}
+
+.cell.x::after,
+.board.x .cell:not(.x):not(.o):hover::after {
+    transform: rotate(-45deg);
+}
+
+.cell.o::before,
+.cell.o::after,
+.board.o .cell:not(.x):not(.o):hover::before,
+.board.o .cell:not(.x):not(.o):hover::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+}
+
+.cell.o::before,
+.board.o .cell:not(.x):not(.o):hover::before {
+    width: calc(var(--mark-size) * .9);
+    height: calc(var(--mark-size) * .9);
+}
+
+.cell.o::after,
+.board.o .cell:not(.x):not(.o):hover::after {
+    width: calc(var(--mark-size) * .7);
+    height: calc(var(--mark-size) * .7);
+    background-color: white;
+}
+
+main
+{
+    background: var(--main-background);
+    height: calc(100% - var(--banner-height));
+    left: var(--sidebar-width);
+    overflow-y: hidden;
+    position: absolute;
+    top: var(--banner-height);
+    width: calc(100% - 2 * var(--sidebar-width));
+}
+
+#title
+{
+    filter: drop-shadow(4px 4px 2px black);
+    color: rgb(180, 180, 180);
+    font-family: "magnetob";
+    font-style: italic;
+    font-size: var(--banner-font-size);
+    margin: 0;
+    position: relative;
+    text-align: center;
+    top: calc(var(--banner-height) / 2 - var(--banner-font-size) / 2);
+}
+
+header
+{
+    background-image: linear-gradient(rgb(255,255,255), rgb(225, 225, 225));
+    height: var(--banner-height);
+    position: absolute;
+    width: 100%;
+}
+
+#docs
+{
+    align-self: left;
+    color: var(--sidebar-colour);
+    position: absolute;
+    right: 1em;
+    font-size: 10px;
+    margin-right: 10px;
+}
+
+#details
+{
+    text-align: right;
+    color: var(--sidebar-colour);
+    position: absolute;
+    right: 1em;
+    top: 20px;
+    right: 20px;
+    font-size: 15px;
+}
+
+aside
+{
+    background-image: linear-gradient(to right, rgb(225,225,225), rgb(255,255,255), rgb(225, 225, 225));
+    color: var(--sidebar-colour);
+    height: calc(100% - var(--banner-height));
+    position: absolute;
+    text-align: center;
+    top: var(--banner-height);
+    width: var(--sidebar-width);
+}
+
+.sidebar
+{
+    padding-top: 20px;
+}
+.sidebar h2
+{
+    margin-bottom: 0;
+}
+
+.sidebar .player
+{
+    margin-bottom: 5ex;
+}
+
+.sidebar .game_info
+{
+    margin-bottom: 5ex;
+}
+.sidebar .game_info #home_ready {
+    font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.sidebar .game_info #away_ready {
+    font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#home_player_type,
+#away_player_type
+{
+    font-weight: bold;
+    font-size: larger;
+}
+
+#home_player .game_info img
+{
+    max-width: 100px;
+}
+
+.sidebar .game_info img
+{
+    max-width: 100px;
+}
+
+.sidebar.x .game_info img
+{
+    border: 3px solid var(--border-colour);
+    max-width: 100px;
+}
+
+.sidebar.o .game_info img
+{
+    border: 3px solid var(--border-colour);
+    max-width: 100px;
+}
+
+.sidebar .stats table
+{
+    margin-bottom: 2ex;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#home_player
+{
+    border-right: var(--sidebar-border-width) solid var(--banner-background);
+    left: 0;
+}
+
+#away_player
+{
+    border-left: var(--sidebar-border-width) solid var(--banner-background);
+    right: 0;
+}
+
+#home_name,
+#away_name
+{
+    background: inherit;
+    border: none;
+    color: inherit;
+    font: inherit;
+    font-size: 16pt;
+    font-weight: bold;
+    text-align: inherit;
+    width: 100%;
+}
+
+#winningMessage
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.3);
+    border: none;
+    color: var(--sidebar-colour);
+    height: 100%;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    justify-items: center;
+    align-items: center;
+}
+
+#winningMessage h2
+{
+    color: rgb(231, 231, 231);
+    filter: drop-shadow(4px 4px 2px black);
+    font-family: "magnetob";
+    font-size: 100pt;
+    margin: 0;
+    margin-top: calc(2 * var(--banner-height));
+}
+
+#result_winner
+{
+    font-size: 24pt;
+    font-weight: bold;
+    line-height: 2;
+}
+
+#result_state
+{
+    font-size: 18pt;
+    font-weight: bold;
+}
+
+#winningMessageContainer
+{
+    padding: 10px;
+    background-color: rgba(200,200,200,0.9);
+    width: 500px;
+    border: 2px solid var(--border-colour);
+    border-radius: 3px;
+    margin-left: 30%;
+}
+
+#restartButton {
+    margin: 10px;
+    font-size: 3rem;
+    font-family: Arial;
+    background-color: rgb(211, 211, 211);
+    border-top: 3px solid rgb(157, 157, 157);
+    border-bottom: 3px solid rgb(66, 66, 66);
+    border-left: 3px solid rgb(157, 157, 157);
+    border-right: 3px solid rgb(66, 66, 66);
+    padding: .25em .5em;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#restartButton:hover {
+    background-color: rgb(211, 211, 211);
+    color: white;
+    border-color: white;
+    border-bottom: 3px solid rgb(157, 157, 157);
+    border-top: 3px solid rgb(66, 66, 66);
+    border-right: 3px solid rgb(157, 157, 157);
+    border-left: 3px solid rgb(66, 66, 66);
+}
